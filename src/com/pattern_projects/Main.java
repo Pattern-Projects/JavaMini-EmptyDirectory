@@ -1,7 +1,6 @@
 package com.pattern_projects;
 
 import java.io.File;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -23,11 +22,8 @@ public class Main {
                 var choice = scanner.next();
                 if (choice.toLowerCase().equals("y") || choice.toLowerCase().equals("yes")) {
 
-                    var list = root.listFiles();
-                    for (var file : list) {
-                        fileDeleter(file);
-                    }
-
+                    fileDeleter(root);
+                    System.out.println("Complete");
                 } else {
                     //Does not want to delete
                     System.out.println("Will not delete directory contents.");
@@ -49,17 +45,14 @@ public class Main {
     }
 
 
-    public static void fileDeleter(File root) {
-        if (root.isDirectory()) {
-            var list = root.listFiles();
-            for (var file : list) {
+    public static void fileDeleter(File directory) {
+        var list = directory.listFiles();
+        for (var file : list) {
+            if (file.isDirectory()) {
                 fileDeleter(file);
             }
-            System.out.println("Deleting Directory: "+root);
-            root.delete();
-        } else {
-            System.out.println("Deleting File: "+root);
-            root.delete();
+            file.delete();
         }
     }
+
 }
